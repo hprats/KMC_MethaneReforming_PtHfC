@@ -7,8 +7,8 @@ reaction = 'DRM'
 temperature = 1000
 
 # Plot parameters
-window_type = 'time'
-window_percent = [50, 100]  # (in %) Ignore first X% of total simulated time (equilibration)
+range_type = 'time'
+analysis_range = [50, 100]  # (in %) Ignore first X% of total simulated time (equilibration)
 weights = 'time'
 min_molec_tof = 0  # To plot TOF and selectivity
 min_molec_selectivity = 100  # To plot TOF and selectivity
@@ -42,14 +42,14 @@ fig, axs = plt.subplots(3, 5, figsize=(14, 6), sharey='row', sharex='col')
 for n, product in enumerate(products):
     plot_heatmap(ax=axs[0, n], scan_path=f"scan_{system}_{reaction}_{temperature}K", x=x, y=y, z="tof",
                  gas_spec=product, min_molec=min_molec_tof,
-                 window_percent=window_percent, window_type=window_type,
+                 analysis_range=analysis_range, range_type=range_type,
                  levels=np.logspace(-1, 4, num=11), show_max=False,
                  auto_title=auto_title, show_colorbar=show_colorbar)
 
 # Plot selectivity
 plot_heatmap(ax=axs[0, 4], scan_path=f"scan_{system}_{reaction}_{temperature}K", x=x, y=y, z='selectivity',
              main_product=main_product, side_products=side_products, min_molec=min_molec_selectivity,
-             window_percent=window_percent, window_type=window_type,
+             analysis_range=analysis_range, range_type=range_type,
              auto_title=auto_title, show_colorbar=show_colorbar)
 
 # Plot coverage
@@ -57,7 +57,7 @@ site_types = ['tC', 'tM', 'Pt'] if system == 'Pt' else ['tC', 'tM']
 for n, site_type in enumerate(site_types):
     plot_heatmap(ax=axs[1, n], scan_path=f"scan_{system}_{reaction}_{temperature}K", x=x, y=y, z="coverage",
                  surf_spec="total", site_type=site_type,
-                 window_percent=window_percent, window_type=window_type, weights=weights,
+                 analysis_range=analysis_range, range_type=range_type, weights=weights,
                  auto_title=auto_title, show_colorbar=show_colorbar)
 
 # Plot phase diagram
@@ -78,7 +78,7 @@ for n, site_type in enumerate(site_types):
                  },
                  tick_values=[0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5],
                  tick_labels=['$CH_{x}$', '$CHO/COH$', '$CO$', '$COOH$', '$CO_{2}$', '$H$', '$H_{2}O$', '$OH$', '$O$'],
-                 window_percent=window_percent, window_type=window_type, weights=weights,
+                 analysis_range=analysis_range, range_type=range_type, weights=weights,
                  auto_title=auto_title, show_colorbar=show_colorbar)
 
 # Hide axis labels of intermediate subplots
